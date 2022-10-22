@@ -5,15 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.avitotechweather.R
+import com.example.avitotechweather.databinding.FragmentWeatherBinding
 
 class WeatherFragment : Fragment() {
+
+    private var fragmentBinding: FragmentWeatherBinding? = null
+    private val binding get() = fragmentBinding!!
+    private val viewModel: WeatherViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather, container, false)
+    ): View {
+
+        fragmentBinding = FragmentWeatherBinding.inflate(inflater, container, false)
+
+        viewModel.weatherResponse.observe(viewLifecycleOwner) { weather ->
+            binding.apply {
+                temperatureTextView.text = weather.fact.temp.toString()
+                weatherTextView.text = weather.fact.condition
+            }
+        }
+
+        return binding.root
     }
 }
