@@ -1,14 +1,12 @@
 package com.example.avitotechweather.presentation.fragments.weather
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.avitotechweather.data.repository.ApiServiceImpl
 import com.example.avitotechweather.domain.models.Weather
-import com.example.avitotechweather.domain.usecases.GetUserGeoPosition
 import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
 import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,17 +19,12 @@ class WeatherViewModel
 constructor(private val apiServiceImpl: ApiServiceImpl): ViewModel() {
 
     private val response = MutableLiveData<Weather>()
-    private val getUserGeoPosition = GetUserGeoPosition()
 
     val weatherResponse: LiveData<Weather>
         get() = response
 
     init {
-        if (getUserGeoPosition.getPosition()) {
-            getWeather(getUserGeoPosition.getLatitude(), getUserGeoPosition.getLongitude())
-        } else {
-            getWeather(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
-        }
+        getWeather(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
     }
 
     private fun getWeather(latitude: Double, longitude: Double) = viewModelScope.launch {
