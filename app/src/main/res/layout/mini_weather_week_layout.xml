@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
 
     <TextView
         android:id="@+id/dateTextView"
@@ -15,7 +15,7 @@
         android:includeFontPadding="false"
         android:text="01 марта,"
         android:textColor="#1E1E1E"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +28,7 @@
         android:includeFontPadding="false"
         android:text="пн"
         android:textColor="#1E1E1E"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/dateTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +41,7 @@
         android:includeFontPadding="false"
         android:text="+ 21°C,"
         android:textColor="#1E1E1E"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/dayOfWeekTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +54,7 @@
         android:includeFontPadding="false"
         android:text="облачно"
         android:textColor="#1E1E1E"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/temperatureTextView"
         app:layout_constraintTop_toTopOf="parent" />
 

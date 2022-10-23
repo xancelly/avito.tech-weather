@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.avitotechweather.data.repository.ApiServiceImpl
+import com.example.avitotechweather.data.repository.WeatherApiServiceImpl
 import com.example.avitotechweather.domain.models.Weather
 import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
 import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel
 @Inject
-constructor(private val apiServiceImpl: ApiServiceImpl): ViewModel() {
+constructor(private val weatherApiServiceImpl: WeatherApiServiceImpl): ViewModel() {
 
     private val response = MutableLiveData<Weather>()
 
@@ -28,11 +28,12 @@ constructor(private val apiServiceImpl: ApiServiceImpl): ViewModel() {
     }
 
     private fun getWeather(latitude: Double, longitude: Double) = viewModelScope.launch {
-        apiServiceImpl.getWeather(lat = latitude, lon = longitude).let { resp ->
+        weatherApiServiceImpl.getWeather(lat = latitude, lon = longitude).let { resp ->
             if (resp.isSuccessful) {
                 response.postValue(resp.body())
+                Log.i("getWeather", resp.message())
             } else {
-                Log.e("getWeather", "getWeather() error: ${resp.message()}")
+                Log.e("getWeather", resp.message())
             }
         }
     }

@@ -1,11 +1,46 @@
 package com.example.avitotechweather.util
 
 object Constants {
-    const val BASE_URL = "https://api.weather.yandex.ru/v2/"
+    const val BASE_URL = "https://api.weather.yandex.ru/"
     const val API_KEY = "6985a2e7-e1b8-47ca-bab9-b24a3d2cb079"
 
-    var DEFAULT_LATITUDE: Double = 55.751244
-    var DEFAULT_LONGITUDE: Double = 37.618423
+    var DEFAULT_LATITUDE: Double = 55.152621
+    var DEFAULT_LONGITUDE: Double = 37.460476
+
+    val dayOfWeek: Map<Int, String> = mapOf(
+        1 to "Понедельник",
+        2 to "Вторник",
+        3 to "Среда",
+        4 to "Четверг",
+        5 to "Пятница",
+        6 to "Суббота",
+        7 to "Воскресенье"
+    )
+
+    val shortDayOfWeek: Map<Int, String> = mapOf(
+        1 to "пн",
+        2 to "вт",
+        3 to "ср",
+        4 to "чт",
+        5 to "пт",
+        6 to "сб",
+        7 to "вс"
+    )
+
+    val month: Map<Int, String> = mapOf(
+        1 to "января",
+        2 to "февраля",
+        3 to "марта",
+        4 to "апреля",
+        5 to "мая",
+        6 to "июня",
+        7 to "июля",
+        8 to "августа",
+        9 to "сентября",
+        10 to "октября",
+        11 to "ноября",
+        12 to "декабря"
+    )
 
     val condition: Map<String, String> = mapOf(
         "clear" to "ясно",
@@ -28,7 +63,4 @@ object Constants {
         "thunderstorm-with-rain" to "дождь с грозой",
         "thunderstorm-with-hail" to "гроза с градом"
     )
-
-    val daytime: Map<String, String> = mapOf("" to "День", "n" to "Ночь")
-
 }
