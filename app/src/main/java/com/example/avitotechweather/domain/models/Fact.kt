@@ -1,5 +1,9 @@
 package com.example.avitotechweather.domain.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Fact(
     val condition: String,
     val daytime: String,
@@ -9,4 +13,4 @@ data class Fact(
     val temp: Int,
     val uptime: Int,
     val wind_speed: Double
-)
+): Parcelable

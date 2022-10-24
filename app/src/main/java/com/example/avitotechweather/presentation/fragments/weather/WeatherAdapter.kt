@@ -48,6 +48,11 @@ class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
             temperatureTextView.text = if (currentForecast.parts.day.temp_max > 0) "+${currentForecast.parts.day.temp_max}°C" else "${currentForecast.parts.day.temp_max}°C"
             weatherTextView.text = condition[currentForecast.parts.day.condition]
         }
+
+/*        holder.itemView.setOnClickListener { view ->
+            val direction = WeatherFragmentDirections.actionWeatherFragmentToDetailWeatherFragment(weather = weatherRepositoryImpl.getWeather())
+            view.findNavController().navigate(direction)
+        }*/
     }
 
     override fun getItemCount() = forecastList.size

@@ -2,18 +2,13 @@ package com.example.avitotechweather.presentation.activities
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.avitotechweather.R
-import com.example.avitotechweather.domain.usecases.GetUserGeoPosition
 import com.example.avitotechweather.presentation.fragments.weather.WeatherFragment
-import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
-import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,4 +48,5 @@ class MainActivity : AppCompatActivity() {
         val weatherFragment = WeatherFragment()
         supportFragmentManager.beginTransaction().add(R.id.fragmentContainerView, weatherFragment).commit()
     }
+
 }

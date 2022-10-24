@@ -32,6 +32,24 @@ class DateTimeConverter {
         return shortDayOfWeek[currentDate].toString()
     }
 
+    fun getNextTimeOfDay(daytime: String) : String {
+        return when (daytime) {
+            "Утро" -> {
+                return "День"
+            }
+            "День" -> {
+                return "Вечер"
+            }
+            "Вечер" -> {
+                return "Ночь"
+            }
+            "Ночь" -> {
+                return "Утро"
+            }
+            else -> {return "ERROR"}
+        }
+    }
+
     fun getTimeOfDay(time: String, offset: Int): String {
         return when (addTimeZoneToTime(convertStringToTime(time), offset)) {
             in LocalTime.of(5,0,0)..LocalTime.of(11, 59,59) -> {
@@ -49,24 +67,6 @@ class DateTimeConverter {
             else -> {
                 "error"
             }
-        }
-    }
-
-    fun getNextTimeOfDay(daytime: String) : String {
-        return when (daytime) {
-            "Утро" -> {
-                return "День"
-            }
-            "День" -> {
-                return "Вечер"
-            }
-            "Вечер" -> {
-                return "Ночь"
-            }
-            "Ночь" -> {
-                return "Утро"
-            }
-            else -> {return "ERROR"}
         }
     }
 }

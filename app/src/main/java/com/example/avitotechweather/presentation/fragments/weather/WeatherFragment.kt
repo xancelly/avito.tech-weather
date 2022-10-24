@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.avitotechweather.R
+import com.example.avitotechweather.data.repository.WeatherRepositoryImpl
 import com.example.avitotechweather.databinding.FragmentWeatherBinding
 import com.example.avitotechweather.domain.usecases.DateTimeConverter
 import com.example.avitotechweather.util.Constants.condition
@@ -19,18 +20,19 @@ import java.time.LocalDate
 @AndroidEntryPoint
 class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
-    private var fragmentBinding: FragmentWeatherBinding? = null
-    private val binding get() = fragmentBinding!!
+    private var weatherBinding: FragmentWeatherBinding? = null
+    private val binding get() = weatherBinding!!
     private val viewModel: WeatherViewModel by viewModels()
     private val dateTimeConverter = DateTimeConverter()
     private lateinit var weatherAdapter: WeatherAdapter
+    private val weatherRepository = WeatherRepositoryImpl()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        fragmentBinding = FragmentWeatherBinding.inflate(inflater, container, false)
+        weatherBinding = FragmentWeatherBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -124,6 +126,6 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
     override fun onDestroy() {
         super.onDestroy()
-        fragmentBinding = null
+        weatherBinding = null
     }
 }
