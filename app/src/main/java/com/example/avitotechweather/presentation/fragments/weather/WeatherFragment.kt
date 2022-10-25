@@ -110,15 +110,15 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
                     }
                     "Вечер" -> {
                         nextTimeOfDayTemperatureTextView.text = if (weather.forecasts[0].parts.evening.temp_max > 0)
-                                                                    "+${weather.forecasts[0].parts.evening.temp_max}°C"
+                                                                    "+${weather.forecasts[0].parts.evening.temp_min}°C"
                                                                 else
-                                                                    "${weather.forecasts[0].parts.evening.temp_max}°C"
+                                                                    "${weather.forecasts[0].parts.evening.temp_min}°C"
                     }
                     "Ночь" -> {
                         nextTimeOfDayTemperatureTextView.text = if (weather.forecasts[0].parts.night.temp_max > 0)
-                                                                    "+${weather.forecasts[0].parts.night.temp_max}°C"
+                                                                    "+${weather.forecasts[0].parts.night.temp_min}°C"
                                                                 else
-                                                                    "${weather.forecasts[0].parts.night.temp_max}°C"
+                                                                    "${weather.forecasts[0].parts.night.temp_min}°C"
                     }
                 }
             }

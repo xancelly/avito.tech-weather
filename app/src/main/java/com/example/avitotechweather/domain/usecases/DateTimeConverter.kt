@@ -13,7 +13,7 @@ class DateTimeConverter {
         return LocalDateTime.parse(currentDate.replace("T", " ").substring(0, currentDate.length-8), formatter).toLocalTime()
     }
 
-    private fun convertStringToDate(currentDate: String): LocalDate {
+    fun convertStringToDate(currentDate: String): LocalDate {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         return LocalDate.parse(currentDate, formatter)
     }
@@ -22,9 +22,14 @@ class DateTimeConverter {
         return time.plusHours(((offset / 3600).toLong()))
     }
 
-    fun getDateAndNameOfMonthFromString(date: String): String {
+    fun getDateFromString(date: String): String {
         val currentDate = convertStringToDate(date)
-        return "${currentDate.dayOfMonth} ${month[currentDate.monthValue]}"
+        return "${currentDate.dayOfMonth}"
+    }
+
+    fun getNameOfMonthFromString(date: String): String {
+        val currentDate = convertStringToDate(date)
+        return "${month[currentDate.monthValue]}"
     }
 
     fun getShortDayOfWeekFromString(date: String): String {

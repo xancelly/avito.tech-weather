@@ -46,7 +46,7 @@ class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
         val currentForecast= forecastList[position]
         holder.binding.apply {
-            dateTextView.text = "${dateTimeConverter.getDateAndNameOfMonthFromString(currentForecast.date)}, "
+            dateTextView.text = "${dateTimeConverter.getDateFromString(currentForecast.date)} ${dateTimeConverter.getNameOfMonthFromString((currentForecast.date))}, "
             dayOfWeekTextView.text = "${dateTimeConverter.getShortDayOfWeekFromString(currentForecast.date)}, "
             temperatureTextView.text = if (currentForecast.parts.day.temp_max > 0) "+${currentForecast.parts.day.temp_max}°C" else "${currentForecast.parts.day.temp_max}°C"
             weatherTextView.text = condition[currentForecast.parts.day.condition]
