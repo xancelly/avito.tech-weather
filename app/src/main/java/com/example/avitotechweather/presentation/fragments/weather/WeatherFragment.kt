@@ -2,15 +2,19 @@ package com.example.avitotechweather.presentation.fragments.weather
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.avitotechweather.R
 import com.example.avitotechweather.data.repository.WeatherRepositoryImpl
 import com.example.avitotechweather.databinding.FragmentWeatherBinding
 import com.example.avitotechweather.domain.usecases.DateTimeConverter
+import com.example.avitotechweather.util.Constants.WEATHER
 import com.example.avitotechweather.util.Constants.condition
 import com.example.avitotechweather.util.Constants.dayOfWeek
 import com.example.avitotechweather.util.Constants.month
@@ -31,9 +35,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         weatherBinding = FragmentWeatherBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -42,12 +44,23 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         loadDataInHeader()
         loadDataInFields()
         loadDataInRecyclerView()
+
+        val onWeekTextView: TextView = view.findViewById(R.id.onWeekTextView)
+        onWeekTextView.setOnClickListener {
+            try {
+                val direction = WeatherFragmentDirections.actionWeatherFragmentToDetailWeatherFragment(weather = WEATHER!!)
+                findNavController().navigate(direction)
+            } catch (e: Exception) {
+                Log.e("onWeekTextView", e.message.toString())
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun loadDataInHeader() {
         viewModel.weatherResponse.observe(requireActivity()) { weather ->
             binding.apply {
+                WEATHER = weather
                 currentCityTextView.text = if (weather.geo_object.province.name == weather.geo_object.locality.name)
                                                 if (weather.geo_object.district != null)
                                                     "${weather.geo_object.province.name}, ${weather.geo_object.district.name}"
@@ -127,5 +140,6 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     override fun onDestroy() {
         super.onDestroy()
         weatherBinding = null
+        WEATHER = null
     }
 }

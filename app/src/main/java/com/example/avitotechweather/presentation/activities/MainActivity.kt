@@ -1,52 +1,97 @@
 package com.example.avitotechweather.presentation.activities
 
+import android.Manifest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.avitotechweather.R
+import com.example.avitotechweather.presentation.fragments.launch.LaunchFragment
+import com.example.avitotechweather.presentation.fragments.launch.LaunchFragmentDirections
 import com.example.avitotechweather.presentation.fragments.weather.WeatherFragment
+import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
+import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalTime
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        checkPermissions()
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        getLocation()
+
     }
 
-    private fun checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(ACCESS_COARSE_LOCATION), 1)
+    private fun getLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION), 100)
+            return
         }
-        showNextFragment()
+
+        val location = fusedLocationProviderClient.lastLocation
+        location.addOnSuccessListener {
+            if (it != null) {
+                DEFAULT_LATITUDE = it.latitude
+                DEFAULT_LONGITUDE = it.longitude
+                showNextFragment()
+            }
+        }
     }
 
+    @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i("onRequestPermissionsResult", "Permissions granted!")
+        if (requestCode == 100) {
+            if (grantResults.isNotEmpty() && (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+                Log.i("onRequestPermissionsResult", "Permissions are granted!")
             } else {
-                Log.e("onRequestPermissionsResult", "Permissions denied!")
+                Log.e("onRequestPermissionsResult", "Permissions are denied!")
             }
         }
         showNextFragment()
     }
 
     private fun showNextFragment() {
-        val weatherFragment = WeatherFragment()
-        supportFragmentManager.beginTransaction().add(R.id.fragmentContainerView, weatherFragment).commit()
+        Thread.sleep(500)
+        val direction = LaunchFragmentDirections.actionLaunchFragmentToWeatherFragment(
+            latitude = DEFAULT_LATITUDE.toFloat(),
+            longitude = DEFAULT_LONGITUDE.toFloat()
+        )
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController: NavController = navHostFragment.navController
+        navController.navigate(direction)
     }
-
 }

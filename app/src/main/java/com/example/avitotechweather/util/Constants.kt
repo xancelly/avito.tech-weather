@@ -1,11 +1,15 @@
 package com.example.avitotechweather.util
 
+import com.example.avitotechweather.domain.models.Weather
+
 object Constants {
     const val BASE_URL = "https://api.weather.yandex.ru/"
     const val API_KEY = "6985a2e7-e1b8-47ca-bab9-b24a3d2cb079"
 
     var DEFAULT_LATITUDE: Double = 55.152621
     var DEFAULT_LONGITUDE: Double = 37.460476
+
+    var WEATHER: Weather? = null
 
     val dayOfWeek: Map<Int, String> = mapOf(
         1 to "Понедельник",
