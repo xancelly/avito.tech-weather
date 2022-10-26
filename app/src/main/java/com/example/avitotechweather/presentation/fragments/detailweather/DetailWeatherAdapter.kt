@@ -52,8 +52,6 @@ class DetailWeatherAdapter: RecyclerView.Adapter<DetailWeatherAdapter.DetailWeat
             dateTextView.text = "${dateTimeConverter.getDateFromString(currentForecast.date)} ${dateTimeConverter.getNameOfMonthFromString(currentForecast.date)}"
             dayTemperatureTextView.text = if (currentForecast.parts.day.temp_max > 0) "+${currentForecast.parts.day.temp_max}°C" else "${currentForecast.parts.day.temp_max}"
             dayWeatherTextView.text = condition[currentForecast.parts.day.condition]
-            nightTemperatureTextView.text = if (currentForecast.parts.night.temp_min > 0) "+${currentForecast.parts.night.temp_min}°C" else "${currentForecast.parts.night.temp_min}°C"
-            nightWeatherTextView.text = condition[currentForecast.parts.night.condition]
         }
     }
 

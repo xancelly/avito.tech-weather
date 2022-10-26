@@ -73,48 +73,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dayTemperatureTextView" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/helvetica_bold"
-        android:includeFontPadding="false"
-        android:text="Ночь"
-        android:textColor="#111111"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/nightWeatherTextView"
-        app:layout_constraintTop_toBottomOf="@+id/dayWeatherTextView" />
-
-    <TextView
-        android:id="@+id/nightTemperatureTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-15dp"
-        android:fontFamily="@font/helvetica_bold"
-        android:includeFontPadding="false"
-        android:text="+21"
-        android:textColor="#111111"
-        android:textSize="54sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/nightWeatherTextView"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/nightWeatherTextView"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-5dp"
-        android:fontFamily="@font/helvetica_bold"
-        android:includeFontPadding="false"
-        android:text="ветренно c прояснениями"
-        android:textColor="#111111"
-        android:textSize="16sp"
-        app:flow_wrapMode="chain"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nightTemperatureTextView" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
