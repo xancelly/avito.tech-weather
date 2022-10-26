@@ -3,8 +3,15 @@ package com.example.avitotechweather.util
 import com.example.avitotechweather.domain.models.Weather
 
 object Constants {
-    const val BASE_URL = "https://api.weather.yandex.ru/"
-    const val API_KEY = "6985a2e7-e1b8-47ca-bab9-b24a3d2cb079"
+    //Yandex.Weather API
+    const val WEATHER_BASE_URL = "https://api.weather.yandex.ru/"
+    const val WEATHER_API_KEY = "6985a2e7-e1b8-47ca-bab9-b24a3d2cb079"
+
+    //MapKit
+    const val MAP_API_KEY = "4c0b0b0b-4f72-404a-b127-d90c371613e5"
+
+    //KLADR-API
+    const val KLADR_BASE_URL = "https://kladr-api.ru/"
 
     var DEFAULT_LATITUDE: Double = 55.152621
     var DEFAULT_LONGITUDE: Double = 37.460476

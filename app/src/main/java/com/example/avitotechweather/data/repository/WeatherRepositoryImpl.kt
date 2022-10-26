@@ -1,18 +1,14 @@
 package com.example.avitotechweather.data.repository
 
+import com.example.avitotechweather.data.api.WeatherApi
 import com.example.avitotechweather.domain.models.Weather
 import com.example.avitotechweather.domain.repository.WeatherRepository
+import retrofit2.Response
+import javax.inject.Inject
 
-class WeatherRepositoryImpl: WeatherRepository {
-
-    private var weather: Weather? = null
-
-    override fun getWeather(): Weather {
-        return this.weather!!
-    }
-
-    override fun setWeather(weather: Weather) {
-        this.weather = weather
-    }
+class WeatherRepositoryImpl
+@Inject
+constructor(private val weatherApi: WeatherApi): WeatherRepository {
+    override suspend fun getWeather(lat: Double, lon: Double): Response<Weather> = weatherApi.getWeather(lat = lat, lon = lon)
 
 }

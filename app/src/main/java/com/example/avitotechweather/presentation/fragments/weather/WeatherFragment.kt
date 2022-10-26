@@ -6,12 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.avitotechweather.R
-import com.example.avitotechweather.data.repository.WeatherRepositoryImpl
 import com.example.avitotechweather.databinding.FragmentWeatherBinding
 import com.example.avitotechweather.domain.usecases.DateTimeConverter
 import com.example.avitotechweather.util.Constants.WEATHER
@@ -29,7 +30,6 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     private val viewModel: WeatherViewModel by viewModels()
     private val dateTimeConverter = DateTimeConverter()
     private lateinit var weatherAdapter: WeatherAdapter
-    private val weatherRepository = WeatherRepositoryImpl()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,10 +48,21 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         val onWeekTextView: TextView = view.findViewById(R.id.onWeekTextView)
         onWeekTextView.setOnClickListener {
             try {
-                val direction = WeatherFragmentDirections.actionWeatherFragmentToDetailWeatherFragment(weather = WEATHER!!)
+                val direction =
+                    WeatherFragmentDirections.actionWeatherFragmentToDetailWeatherFragment(weather = WEATHER!!)
                 findNavController().navigate(direction)
             } catch (e: Exception) {
                 Log.e("onWeekTextView", e.message.toString())
+            }
+        }
+
+        val editCityButton: ImageButton = view.findViewById(R.id.editCityButton)
+        editCityButton.setOnClickListener {
+            try {
+                val direction = WeatherFragmentDirections.actionWeatherFragmentToSearchFragment()
+                findNavController().navigate(direction)
+            } catch (e: Exception) {
+                Log.e("editCityButton", e.message.toString())
             }
         }
     }

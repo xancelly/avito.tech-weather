@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.avitotechweather.databinding.FragmentLaunchBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LaunchFragment : Fragment() {
 
     private var launchBinding: FragmentLaunchBinding? = null

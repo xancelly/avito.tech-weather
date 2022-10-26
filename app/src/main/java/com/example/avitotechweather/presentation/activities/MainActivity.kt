@@ -1,33 +1,23 @@
 package com.example.avitotechweather.presentation.activities
 
-import android.Manifest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.avitotechweather.R
-import com.example.avitotechweather.presentation.fragments.launch.LaunchFragment
 import com.example.avitotechweather.presentation.fragments.launch.LaunchFragmentDirections
-import com.example.avitotechweather.presentation.fragments.weather.WeatherFragment
 import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
 import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalTime
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

@@ -47,6 +47,8 @@ class DetailWeatherFragment : Fragment() {
         }
     }
 
+
+
     override fun onDestroy() {
         super.onDestroy()
         detailBinding = null

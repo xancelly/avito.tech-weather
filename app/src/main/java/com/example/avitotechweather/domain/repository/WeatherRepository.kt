@@ -1,9 +1,9 @@
 package com.example.avitotechweather.domain.repository
 
 import com.example.avitotechweather.domain.models.Weather
+import retrofit2.Response
+
 
 interface WeatherRepository {
-    fun getWeather(): Weather
-
-    fun setWeather(weather: Weather)
+    suspend fun getWeather(lat: Double, lon: Double): Response<Weather>
 }
