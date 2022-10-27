@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +15,7 @@ import com.example.avitotechweather.R
 import com.example.avitotechweather.databinding.FragmentWeatherBinding
 import com.example.avitotechweather.domain.usecases.DateTimeConverter
 import com.example.avitotechweather.domain.usecases.DynamicBackgroundChange
+import com.example.avitotechweather.presentation.activities.MainActivity
 import com.example.avitotechweather.util.Constants.CURRENT_DAYTIME
 import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
 import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
@@ -23,8 +23,11 @@ import com.example.avitotechweather.util.Constants.WEATHER
 import com.example.avitotechweather.util.Constants.condition
 import com.example.avitotechweather.util.Constants.dayOfWeek
 import com.example.avitotechweather.util.Constants.month
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+
 
 @AndroidEntryPoint
 class WeatherFragment : Fragment(R.layout.fragment_weather) {
@@ -35,6 +38,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     private val dateTimeConverter = DateTimeConverter()
     private lateinit var weatherAdapter: WeatherAdapter
     private var dynamicBackgroundChange: DynamicBackgroundChange = DynamicBackgroundChange()
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +48,11 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         return binding.root
     }
 
+    @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient((activity as MainActivity))
 
         loadDataInHeader()
         loadDataInFields()
@@ -72,13 +79,12 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
             }
         }
 
-        val currentCityTextView: TextView = view.findViewById(R.id.currentCityTextView)
-        currentCityTextView.setOnClickListener {
-            try {
-                val direction = WeatherFragmentDirections.actionWeatherFragmentToSearchFragment()
-                findNavController().navigate(direction)
-            } catch (e: Exception) {
-                Log.e("editCityButton", e.message.toString())
+        val currentPositionButton: ImageButton = view.findViewById(R.id.currentPositionButton)
+        currentPositionButton.setOnClickListener {
+            fusedLocationProviderClient.lastLocation.addOnCompleteListener {
+                DEFAULT_LATITUDE = it.result.latitude
+                DEFAULT_LONGITUDE = it.result.longitude
+                viewModel.updateWeather(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
             }
         }
     }

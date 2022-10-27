@@ -14,6 +14,8 @@ object Constants {
     const val GEOCODER_BASE_URL = "https://geocode-maps.yandex.ru/1.x/"
     const val GEOCODER_API_KEY = "be769a8c-c92f-446f-90a4-11ad1fc687a1"
 
+    const val PERMISSION_REQUEST_ACCESS_LOCATION = 100
+
     //Best location
     var DEFAULT_LATITUDE: Double = 55.778492
     var DEFAULT_LONGITUDE: Double = 37.587905

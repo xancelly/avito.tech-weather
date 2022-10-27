@@ -1,16 +1,18 @@
 package com.example.avitotechweather.presentation.activities
 
+import android.Manifest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
-import android.media.MediaPlayer.OnCompletionListener
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.avitotechweather.R
 import com.example.avitotechweather.databinding.ActivityMainBinding
@@ -21,12 +23,11 @@ import com.example.avitotechweather.presentation.fragments.launch.LaunchFragment
 import com.example.avitotechweather.util.Constants.CURRENT_DAYTIME
 import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
 import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
+import com.example.avitotechweather.util.Constants.PERMISSION_REQUEST_ACCESS_LOCATION
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.tasks.OnCompleteListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalTime
-import java.util.Calendar
 
 
 @AndroidEntryPoint
@@ -58,53 +59,87 @@ class MainActivity : AppCompatActivity() {
         connectionLiveData.observe(this) { isConnected ->
             isConnected?.let {
                 fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-                getLocation()
+                getCurrentLocation()
             }
         }
     }
 
-    private fun getLocation() {
-
-        connectionLiveData.removeObservers(this)
-
+    private fun checkPermissions(): Boolean {
         if (ActivityCompat.checkSelfPermission(
                 this,
-                ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this,
-                ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
+                ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(this, arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION), 100)
-            return
+            return true
         }
+        return false
+    }
 
-        val location = fusedLocationProviderClient.lastLocation
-        location.addOnSuccessListener {
-            if (it != null) {
-                DEFAULT_LATITUDE = it.latitude
-                DEFAULT_LONGITUDE = it.longitude
-                showNextFragment()
+    private fun getCurrentLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestPermission()
+                    return
+                }
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this) { task ->
+                    val location: Location? = task.result
+                    if (location != null) {
+                        connectionLiveData.removeObservers(this)
+
+                        DEFAULT_LATITUDE = location.latitude
+                        DEFAULT_LONGITUDE = location.longitude
+
+                        showNextFragment()
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Необходимо включить геолокацию!", Toast.LENGTH_LONG).show()
             }
+        } else {
+            requestPermission()
         }
     }
 
-    @SuppressLint("MissingPermission")
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION),
+            PERMISSION_REQUEST_ACCESS_LOCATION
+        )
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 100) {
+        if (requestCode == PERMISSION_REQUEST_ACCESS_LOCATION) {
             if (grantResults.isNotEmpty() && (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-                Log.i("onRequestPermissionsResult", "Permissions are granted!")
+                getCurrentLocation()
+                Log.i("onRequestPermissionsResult", "Permission is granted!")
             } else {
-                Log.e("onRequestPermissionsResult", "Permissions are denied!")
+                Log.e("onRequestPermissionsResult", "Permission is denied!")
             }
         }
-        showNextFragment()
     }
+
 
     private fun showNextFragment() {
         Thread.sleep(500)
