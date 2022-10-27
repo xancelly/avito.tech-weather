@@ -8,9 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.example.avitotechweather.R
 import com.example.avitotechweather.databinding.FragmentSearchBinding
+import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
+import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
+import com.example.avitotechweather.util.Constants.USER_SEARCH_RESULT
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.BoundingBox
 import com.yandex.mapkit.geometry.Point
@@ -27,6 +33,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), SuggestSession.Sugges
     private var suggestSession: SuggestSession? = null
     private var searchBinding: FragmentSearchBinding? = null
     private val binding get() = searchBinding!!
+    private val viewModel: SearchViewModel by viewModels()
     private lateinit var searchEditText: EditText
     private lateinit var resultAdapter: SearchAdapter
     private var suggestResult: List<SuggestItem>? = null
@@ -64,7 +71,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), SuggestSession.Sugges
 
         searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.ONLINE)
         suggestSession = searchManager!!.createSuggestSession()
-        resultAdapter = SearchAdapter()
+        resultAdapter = SearchAdapter(viewModel)
         searchEditText = view.findViewById(R.id.searchEditText)
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -82,6 +89,13 @@ class SearchFragment : Fragment(R.layout.fragment_search), SuggestSession.Sugges
         })
     }
 
+    private fun showWeatherFragment() {
+        viewModel.geocoderResponse.removeObservers(this)
+
+        val direction = SearchFragmentDirections.actionSearchFragmentToWeatherFragment()
+        binding.root.findNavController().navigate(direction)
+    }
+
     private fun loadDataInRecyclerView() {
 
         binding.resultRecyclerView.apply {
@@ -89,6 +103,18 @@ class SearchFragment : Fragment(R.layout.fragment_search), SuggestSession.Sugges
         }
 
         resultAdapter.suggestList = suggestResult!!
+
+        viewModel.geocoderResponse.observe(requireActivity()) { geocoder ->
+            try {
+                val pos = geocoder.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(" ").toTypedArray()
+                DEFAULT_LATITUDE = pos[1].toDouble()
+                DEFAULT_LONGITUDE = pos[0].toDouble()
+                Log.i("SearchFragment", "viewModel current lat ${pos[0]} and lon ${pos[1]}")
+                showWeatherFragment()
+            } catch (e: Exception) {
+                Log.e("SearchFragment", "viewModel error: ${e.message}")
+            }
+        }
     }
 
     private fun requestSuggest(query: String) {

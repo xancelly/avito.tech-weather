@@ -3,15 +3,15 @@ package com.example.avitotechweather.presentation.fragments.search
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.avitotechweather.databinding.SearchResultLayoutBinding
-import com.example.avitotechweather.domain.repository.GeocoderRepository
 import com.yandex.mapkit.search.SuggestItem
+import ru.homyakin.iuliia.Schemas
+import ru.homyakin.iuliia.Translator
 
-class SearchAdapter: RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
+class SearchAdapter(val viewModel: SearchViewModel): RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
     class SearchViewHolder(val binding: SearchResultLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -52,13 +52,11 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
         }
 
         holder.itemView.setOnClickListener { view ->
-            val direction = SearchFragmentDirections.actionSearchFragmentToWeatherFragment(
-                latitude = 1f,
-                longitude = 1f
-            )
-            view.findNavController().navigate(direction)
 
-
+            val translator: Translator = Translator(Schemas.YANDEX_MAPS)
+            var resultString = translator.translate(currentSuggestItem.displayText)
+            resultString = resultString.replace(" ", "")
+            viewModel.getCityPosition(currentSuggestItem.displayText.toString())
         }
     }
 

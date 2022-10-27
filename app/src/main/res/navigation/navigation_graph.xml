@@ -25,10 +25,6 @@
         <action
             android:id="@+id/action_weatherFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
-        <argument android:name="latitude"
-            android:defaultValue="55.751244" />
-        <argument android:name="longitude"
-            android:defaultValue="37.618423" />
     </fragment>
     <fragment
         android:id="@+id/detailWeatherFragment"

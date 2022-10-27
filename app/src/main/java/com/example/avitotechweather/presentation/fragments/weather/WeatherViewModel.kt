@@ -27,6 +27,10 @@ constructor(private val weatherRepository: WeatherRepository): ViewModel() {
         getWeather(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
     }
 
+    fun updateWeather(latitude: Double, longitude: Double) {
+        getWeather(latitude, longitude)
+    }
+
     private fun getWeather(latitude: Double, longitude: Double) = viewModelScope.launch {
         weatherRepository.getWeather(lat = latitude, lon = longitude).let { resp ->
             if (resp.isSuccessful) {

@@ -90,10 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showNextFragment() {
         Thread.sleep(500)
-        val direction = LaunchFragmentDirections.actionLaunchFragmentToWeatherFragment(
-            latitude = DEFAULT_LATITUDE.toFloat(),
-            longitude = DEFAULT_LONGITUDE.toFloat()
-        )
+        val direction = LaunchFragmentDirections.actionLaunchFragmentToWeatherFragment()
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController: NavController = navHostFragment.navController

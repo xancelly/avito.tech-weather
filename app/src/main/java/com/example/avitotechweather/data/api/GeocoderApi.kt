@@ -7,6 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GeocoderApi {
-    @GET("apikey=$GEOCODER_API_KEY&format=json")
-    suspend fun getCityPosition(@Query("geocode") geocode: String): Response<YandexGeocoder>
+    @GET("?apikey=$GEOCODER_API_KEY&format=json")
+    suspend fun getCityPosition(@Query(value = "geocode", encoded = true) geocode: String): Response<YandexGeocoder>
 }

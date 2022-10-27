@@ -36,11 +36,11 @@
 
     <TextView
         android:id="@+id/currentCityTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:includeFontPadding="false"
         android:layout_marginStart="10dp"
         android:fontFamily="@font/helvetica_bold"
+        android:includeFontPadding="false"
         android:text="Московская область, г. Чехов"
         android:textColor="#111111"
         android:textSize="16sp"
@@ -52,9 +52,12 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:background="#00FF"
-        android:src="@drawable/ic_baseline_edit_24"
         android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_edit_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/currentCityTextView"
         app:layout_constraintTop_toTopOf="@+id/currentCityTextView" />
 

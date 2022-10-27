@@ -15,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.avitotechweather.R
 import com.example.avitotechweather.databinding.FragmentWeatherBinding
 import com.example.avitotechweather.domain.usecases.DateTimeConverter
+import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
+import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
 import com.example.avitotechweather.util.Constants.WEATHER
 import com.example.avitotechweather.util.Constants.condition
 import com.example.avitotechweather.util.Constants.dayOfWeek
@@ -41,6 +43,9 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.updateWeather(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
+
         loadDataInHeader()
         loadDataInFields()
         loadDataInRecyclerView()
