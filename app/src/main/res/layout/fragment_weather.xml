@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="@font/helvetica_bold"
         android:includeFontPadding="false"
         android:text="Вечер"
@@ -112,7 +112,7 @@
         android:lineSpacingMultiplier="0.6"
         android:text="облачно"
         android:textColor="#111111"
-        android:textSize="48sp"
+        android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -191,10 +191,12 @@
         android:text="+ 11°C"
         android:textColor="#1E1E1E  "
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/onWeekTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nextTimeOfDayTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/nextTimeOfDayTextView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/onWeekTextView"
