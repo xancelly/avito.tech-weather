@@ -6,34 +6,49 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.avitotechweather.R
+import com.example.avitotechweather.databinding.ActivityMainBinding
+import com.example.avitotechweather.domain.usecases.ConnectionLiveData
 import com.example.avitotechweather.presentation.fragments.launch.LaunchFragmentDirections
 import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
 import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
+import java.net.InetAddress
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var connectionLiveData: ConnectionLiveData
+    private var mainBinding: ActivityMainBinding? = null
+    private val binding get() = mainBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        getLocation()
-
+        connectionLiveData = ConnectionLiveData(this)
+        connectionLiveData.observe(this) { isConnected ->
+            isConnected?.let {
+                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+                getLocation()
+            }
+        }
     }
 
     private fun getLocation() {
+
+        connectionLiveData.removeObservers(this)
+
         if (ActivityCompat.checkSelfPermission(
                 this,
                 ACCESS_FINE_LOCATION
@@ -83,5 +98,10 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         navController.navigate(direction)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainBinding = null
     }
 }

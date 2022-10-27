@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.example.avitotechweather.R
 import com.example.avitotechweather.databinding.FragmentDetailWeatherBinding
-import com.example.avitotechweather.domain.models.Weather
-import com.example.avitotechweather.domain.usecases.DateTimeConverter
+import com.example.avitotechweather.domain.models.weather.Weather
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

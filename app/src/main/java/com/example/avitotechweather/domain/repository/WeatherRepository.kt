@@ -1,6 +1,6 @@
 package com.example.avitotechweather.domain.repository
 
-import com.example.avitotechweather.domain.models.Weather
+import com.example.avitotechweather.domain.models.weather.Weather
 import retrofit2.Response
 
 

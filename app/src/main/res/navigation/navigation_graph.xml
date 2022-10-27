@@ -40,7 +40,7 @@
             app:destination="@id/weatherFragment" />
         <argument
             android:name="weather"
-            app:argType="com.example.avitotechweather.domain.models.Weather" />
+            app:argType="com.example.avitotechweather.domain.models.weather.Weather" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

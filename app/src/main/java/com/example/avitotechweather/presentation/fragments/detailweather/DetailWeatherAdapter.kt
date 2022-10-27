@@ -7,12 +7,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.avitotechweather.databinding.FullWeatherWeekLayoutBinding
-import com.example.avitotechweather.domain.models.Forecast
+import com.example.avitotechweather.domain.models.weather.Forecast
 import com.example.avitotechweather.domain.usecases.DateTimeConverter
-import com.example.avitotechweather.presentation.fragments.weather.WeatherAdapter
 import com.example.avitotechweather.util.Constants.condition
 import com.example.avitotechweather.util.Constants.dayOfWeek
-import java.time.LocalDate
 
 class DetailWeatherAdapter: RecyclerView.Adapter<DetailWeatherAdapter.DetailWeatherViewHolder>() {
     class DetailWeatherViewHolder(val binding: FullWeatherWeekLayoutBinding) :

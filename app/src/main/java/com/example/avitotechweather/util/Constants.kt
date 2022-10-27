@@ -1,6 +1,6 @@
 package com.example.avitotechweather.util
 
-import com.example.avitotechweather.domain.models.Weather
+import com.example.avitotechweather.domain.models.weather.Weather
 
 object Constants {
     //Yandex.Weather API
@@ -13,8 +13,8 @@ object Constants {
     //KLADR-API
     const val KLADR_BASE_URL = "https://kladr-api.ru/"
 
-    var DEFAULT_LATITUDE: Double = 55.152621
-    var DEFAULT_LONGITUDE: Double = 37.460476
+    var DEFAULT_LATITUDE: Double = 55.778492
+    var DEFAULT_LONGITUDE: Double = 37.587905
 
     var WEATHER: Weather? = null
 

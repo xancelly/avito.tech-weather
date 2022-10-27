@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.avitotechweather.data.repository.KladrRepositoryImpl
-import com.example.avitotechweather.domain.models.SearchResult
+import com.example.avitotechweather.domain.models.kladr.SearchResult
 import com.example.avitotechweather.domain.repository.KladrRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,18 +17,18 @@ class SearchViewModel
 constructor(private val kladrRepository: KladrRepository): ViewModel() {
 
     private val response = MutableLiveData<SearchResult>()
-    private var searchField: String = ""
+    private var searchField: String = "мануш"
 
     val searchResponse: LiveData<SearchResult>
         get() = response
 
     init {
-        if (searchField.isNotEmpty())
-            getAddress(searchField)
+        getAddress(searchField)
     }
 
     fun setSearchField(search: String) {
         searchField = search
+        getAddress(search)
     }
 
     private fun getAddress(query: String) = viewModelScope.launch {

@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.avitotechweather.data.repository.WeatherRepositoryImpl
-import com.example.avitotechweather.domain.models.Weather
+import com.example.avitotechweather.domain.models.weather.Weather
 import com.example.avitotechweather.domain.repository.WeatherRepository
 import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
 import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE

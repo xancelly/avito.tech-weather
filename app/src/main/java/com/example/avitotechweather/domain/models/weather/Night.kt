@@ -1,4 +1,4 @@
-package com.example.avitotechweather.domain.models
+package com.example.avitotechweather.domain.models.weather
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

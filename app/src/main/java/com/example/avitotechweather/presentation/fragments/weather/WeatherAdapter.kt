@@ -3,15 +3,12 @@ package com.example.avitotechweather.presentation.fragments.weather
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.avitotechweather.databinding.MiniWeatherWeekLayoutBinding
-import com.example.avitotechweather.domain.models.Forecast
+import com.example.avitotechweather.domain.models.weather.Forecast
 import com.example.avitotechweather.domain.usecases.DateTimeConverter
-import com.example.avitotechweather.util.Constants.WEATHER
 import com.example.avitotechweather.util.Constants.condition
 
 class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {

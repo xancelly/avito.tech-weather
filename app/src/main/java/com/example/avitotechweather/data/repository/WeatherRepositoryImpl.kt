@@ -1,7 +1,7 @@
 package com.example.avitotechweather.data.repository
 
 import com.example.avitotechweather.data.api.WeatherApi
-import com.example.avitotechweather.domain.models.Weather
+import com.example.avitotechweather.domain.models.weather.Weather
 import com.example.avitotechweather.domain.repository.WeatherRepository
 import retrofit2.Response
 import javax.inject.Inject

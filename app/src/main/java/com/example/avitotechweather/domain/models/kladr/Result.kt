@@ -1,6 +1,6 @@
-package com.example.avitotechweather.domain.models
+package com.example.avitotechweather.domain.models.kladr
 
-data class Parent(
+data class Result(
     val cadnum: String,
     val contentType: String,
     val guid: String,
@@ -11,6 +11,7 @@ data class Parent(
     val okato: String,
     val oktmo: String,
     val parentGuid: String,
+    val parents: List<Parent>,
     val type: String,
     val typeShort: String,
     val zip: Int

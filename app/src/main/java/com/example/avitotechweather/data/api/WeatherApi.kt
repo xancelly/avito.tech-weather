@@ -1,6 +1,6 @@
 package com.example.avitotechweather.data.api
 
-import com.example.avitotechweather.domain.models.Weather
+import com.example.avitotechweather.domain.models.weather.Weather
 import com.example.avitotechweather.util.Constants.WEATHER_API_KEY
 import retrofit2.Response
 import retrofit2.http.GET

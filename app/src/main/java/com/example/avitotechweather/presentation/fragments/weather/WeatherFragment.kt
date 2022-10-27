@@ -125,6 +125,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
                                                                 else
                                                                     "${weather.forecasts[0].parts.evening.temp_min}°C"
                     }
+                    //добавить проверку до 12 и после 12 и выводить разные прогнозы
                     "Ночь" -> {
                         nextTimeOfDayTemperatureTextView.text = if (weather.forecasts[0].parts.night.temp_max > 0)
                                                                     "+${weather.forecasts[0].parts.night.temp_min}°C"
