@@ -78,5 +78,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.0.0'
 
     //MapKit
-    implementation 'com.yandex.android:maps.mobile:4.2.1-lite'
+    implementation 'com.yandex.android:maps.mobile:4.2.1-full'
 }

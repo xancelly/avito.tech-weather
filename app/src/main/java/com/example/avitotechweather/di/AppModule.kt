@@ -1,12 +1,12 @@
 package com.example.avitotechweather.di
 
-import com.example.avitotechweather.data.api.KladrApi
+import com.example.avitotechweather.data.api.GeocoderApi
 import com.example.avitotechweather.data.api.WeatherApi
-import com.example.avitotechweather.data.repository.KladrRepositoryImpl
+import com.example.avitotechweather.data.repository.GeocoderRepositoryImpl
 import com.example.avitotechweather.data.repository.WeatherRepositoryImpl
-import com.example.avitotechweather.domain.repository.KladrRepository
+import com.example.avitotechweather.domain.repository.GeocoderRepository
 import com.example.avitotechweather.domain.repository.WeatherRepository
-import com.example.avitotechweather.util.Constants.KLADR_BASE_URL
+import com.example.avitotechweather.util.Constants.GEOCODER_BASE_URL
 import com.example.avitotechweather.util.Constants.WEATHER_BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -14,7 +14,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -41,18 +40,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    @Named("Kladr")
-    fun provideKldrApi(): KladrApi {
+    @Named("Geocoder")
+    fun provideKldrApi(): GeocoderApi {
         return Retrofit.Builder()
-            .baseUrl(KLADR_BASE_URL)
+            .baseUrl(GEOCODER_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(KladrApi::class.java)
+            .create(GeocoderApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideKladrRepository(@Named("Kladr") kladrApi: KladrApi): KladrRepository {
-        return KladrRepositoryImpl(kladrApi)
+    fun provideKladrRepository(@Named("Geocoder") geocoderApi: GeocoderApi): GeocoderRepository {
+        return GeocoderRepositoryImpl(geocoderApi)
     }
 }
