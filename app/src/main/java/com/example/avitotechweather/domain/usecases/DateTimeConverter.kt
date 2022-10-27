@@ -56,8 +56,24 @@ class DateTimeConverter {
     }
 
     fun getTimeOfDay(time: String, offset: Int): String {
-        val a = addTimeZoneToTime(convertStringToTime(time), offset)
-        return when (a) {
+        return when (addTimeZoneToTime(convertStringToTime(time), offset)) {
+            in LocalTime.of(5,0,0)..LocalTime.of(11, 59,59) -> {
+                "Утро"
+            }
+            in LocalTime.of(12, 0,0)..LocalTime.of(16, 59,59) -> {
+                "День"
+            }
+            in LocalTime.of(17, 0,0)..LocalTime.of(21, 59,59) -> {
+                "Вечер"
+            }
+            else -> {
+                "Ночь"
+            }
+        }
+    }
+
+    fun getTimeOfDay(time: LocalTime): String {
+        return when (time) {
             in LocalTime.of(5,0,0)..LocalTime.of(11, 59,59) -> {
                 "Утро"
             }

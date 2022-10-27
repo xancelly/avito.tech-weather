@@ -8,22 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.avitotechweather.R
 import com.example.avitotechweather.databinding.FragmentSearchBinding
+import com.example.avitotechweather.domain.usecases.DynamicBackgroundChange
+import com.example.avitotechweather.presentation.fragments.detailweather.DetailWeatherFragmentDirections
 import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
 import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
-import com.example.avitotechweather.util.Constants.USER_SEARCH_RESULT
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.BoundingBox
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.search.*
 import com.yandex.runtime.Error
-import com.yandex.runtime.network.NetworkError
-import com.yandex.runtime.network.RemoteError
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +32,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), SuggestSession.Sugges
     private var searchManager: SearchManager? = null
     private var suggestSession: SuggestSession? = null
     private var searchBinding: FragmentSearchBinding? = null
+    private var dynamicBackgroundChange: DynamicBackgroundChange = DynamicBackgroundChange()
     private val binding get() = searchBinding!!
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var searchEditText: EditText
@@ -52,6 +53,15 @@ class SearchFragment : Fragment(R.layout.fragment_search), SuggestSession.Sugges
         savedInstanceState: Bundle?
     ): View {
         searchBinding = FragmentSearchBinding.inflate(inflater, container, false)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val direction = SearchFragmentDirections.actionSearchFragmentToWeatherFragment()
+                findNavController().navigate(direction)
+            }
+
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+        dynamicBackgroundChange.changeBackground(binding.root)
         return binding.root
     }
 

@@ -5,7 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GeoObject(
-    val district: Disctric,
+    val district: Disctric?,
     val locality: Locality,
     val province: Province
-): Parcelable
+): Parcelable {
+}

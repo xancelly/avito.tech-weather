@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.avitotechweather.databinding.SearchResultLayoutBinding
 import com.yandex.mapkit.search.SuggestItem
-import ru.homyakin.iuliia.Schemas
-import ru.homyakin.iuliia.Translator
 
 class SearchAdapter(val viewModel: SearchViewModel): RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
     class SearchViewHolder(val binding: SearchResultLayoutBinding) :

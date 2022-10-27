@@ -6,15 +6,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.avitotechweather.R
 import com.example.avitotechweather.databinding.FragmentWeatherBinding
 import com.example.avitotechweather.domain.usecases.DateTimeConverter
+import com.example.avitotechweather.domain.usecases.DynamicBackgroundChange
+import com.example.avitotechweather.util.Constants.CURRENT_DAYTIME
 import com.example.avitotechweather.util.Constants.DEFAULT_LATITUDE
 import com.example.avitotechweather.util.Constants.DEFAULT_LONGITUDE
 import com.example.avitotechweather.util.Constants.WEATHER
@@ -32,6 +34,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     private val viewModel: WeatherViewModel by viewModels()
     private val dateTimeConverter = DateTimeConverter()
     private lateinit var weatherAdapter: WeatherAdapter
+    private var dynamicBackgroundChange: DynamicBackgroundChange = DynamicBackgroundChange()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +46,6 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.updateWeather(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
 
         loadDataInHeader()
         loadDataInFields()
@@ -63,6 +64,16 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
         val editCityButton: ImageButton = view.findViewById(R.id.editCityButton)
         editCityButton.setOnClickListener {
+            try {
+                val direction = WeatherFragmentDirections.actionWeatherFragmentToSearchFragment()
+                findNavController().navigate(direction)
+            } catch (e: Exception) {
+                Log.e("editCityButton", e.message.toString())
+            }
+        }
+
+        val currentCityTextView: TextView = view.findViewById(R.id.currentCityTextView)
+        currentCityTextView.setOnClickListener {
             try {
                 val direction = WeatherFragmentDirections.actionWeatherFragmentToSearchFragment()
                 findNavController().navigate(direction)
@@ -100,8 +111,9 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
         viewModel.weatherResponse.observe(viewLifecycleOwner) { weather ->
             binding.apply {
-                //Change background
                 timeOfDayTextView.text = dateTimeConverter.getTimeOfDay(weather.now_dt, weather.info.tzinfo.offset)
+                CURRENT_DAYTIME = timeOfDayTextView.text.toString()
+                dynamicBackgroundChange.changeBackground(binding.root)
                 temperatureTextView.text = if (weather.fact.temp > 0)
                                                 "+${weather.fact.temp}°C"
                                             else
@@ -157,6 +169,5 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
     override fun onDestroy() {
         super.onDestroy()
         weatherBinding = null
-        WEATHER = null
     }
 }

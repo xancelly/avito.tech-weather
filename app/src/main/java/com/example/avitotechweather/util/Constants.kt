@@ -19,6 +19,7 @@ object Constants {
     var DEFAULT_LONGITUDE: Double = 37.587905
 
     var WEATHER: Weather? = null
+    var CURRENT_DAYTIME: String = ""
 
     val dayOfWeek: Map<Int, String> = mapOf(
         1 to "Понедельник",

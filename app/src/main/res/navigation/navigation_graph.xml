@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_launch" >
         <action
             android:id="@+id/action_launchFragment_to_weatherFragment"
-            app:destination="@id/weatherFragment" />
+            app:destination="@id/weatherFragment"
+            app:popUpTo="@id/weatherFragment"/>
     </fragment>
     <fragment
         android:id="@+id/weatherFragment"
@@ -21,10 +22,12 @@
         tools:layout="@layout/fragment_weather" >
         <action
             android:id="@+id/action_weatherFragment_to_detailWeatherFragment"
-            app:destination="@id/detailWeatherFragment" />
+            app:destination="@id/detailWeatherFragment"
+            app:popUpTo="@id/detailWeatherFragment"/>
         <action
             android:id="@+id/action_weatherFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/searchFragment"/>
     </fragment>
     <fragment
         android:id="@+id/detailWeatherFragment"
@@ -33,7 +36,8 @@
         tools:layout="@layout/fragment_detail_weather" >
         <action
             android:id="@+id/action_detailWeatherFragment_to_weatherFragment"
-            app:destination="@id/weatherFragment" />
+            app:destination="@id/weatherFragment"
+            app:popUpTo="@id/weatherFragment"/>
         <argument
             android:name="weather"
             app:argType="com.example.avitotechweather.domain.models.weather.Weather" />
@@ -45,6 +49,7 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_weatherFragment"
-            app:destination="@id/weatherFragment" />
+            app:destination="@id/weatherFragment"
+            app:popUpTo="@id/weatherFragment"/>
     </fragment>
 </navigation>

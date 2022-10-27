@@ -79,7 +79,4 @@ dependencies {
 
     //MapKit
     implementation 'com.yandex.android:maps.mobile:4.2.1-full'
-
-    //Translit
-    implementation 'ru.homyakin:iuliia-java:1.8'
 }
