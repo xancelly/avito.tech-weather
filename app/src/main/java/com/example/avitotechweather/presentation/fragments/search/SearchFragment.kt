@@ -133,12 +133,6 @@ class SearchFragment : Fragment(R.layout.fragment_search), SuggestSession.Sugges
     }
 
     override fun onError(error: Error) {
-        var errorMessage = "Неизвестная ошибка"
-        if (error is RemoteError) {
-            errorMessage = "Ошибка при получении данных"
-        } else if (error is NetworkError) {
-            errorMessage = "Ошибка сети"
-        }
         Log.e("SearchFragment", error.toString())
     }
 }

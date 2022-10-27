@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/morning_background"
+    android:background="#00FF"
     tools:context=".presentation.fragments.detailweather.DetailWeatherFragment">
 
     <androidx.recyclerview.widget.RecyclerView

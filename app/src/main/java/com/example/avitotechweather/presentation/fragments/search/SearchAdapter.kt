@@ -51,11 +51,7 @@ class SearchAdapter(val viewModel: SearchViewModel): RecyclerView.Adapter<Search
             fullNameCity.text = currentSuggestItem.displayText
         }
 
-        holder.itemView.setOnClickListener { view ->
-
-            val translator: Translator = Translator(Schemas.YANDEX_MAPS)
-            var resultString = translator.translate(currentSuggestItem.displayText)
-            resultString = resultString.replace(" ", "")
+        holder.itemView.setOnClickListener {
             viewModel.getCityPosition(currentSuggestItem.displayText.toString())
         }
     }

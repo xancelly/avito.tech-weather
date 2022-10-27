@@ -30,11 +30,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var connectionLiveData: ConnectionLiveData
     private var mainBinding: ActivityMainBinding? = null
     private val binding get() = mainBinding!!
+    private lateinit var navHostFragment: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navHostFragment.host
 
         connectionLiveData = ConnectionLiveData(this)
         connectionLiveData.observe(this) { isConnected ->
@@ -43,6 +48,10 @@ class MainActivity : AppCompatActivity() {
                 getLocation()
             }
         }
+    }
+
+    private fun changeBackground() {
+
     }
 
     private fun getLocation() {
@@ -91,8 +100,6 @@ class MainActivity : AppCompatActivity() {
     private fun showNextFragment() {
         Thread.sleep(500)
         val direction = LaunchFragmentDirections.actionLaunchFragmentToWeatherFragment()
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         navController.navigate(direction)
     }
